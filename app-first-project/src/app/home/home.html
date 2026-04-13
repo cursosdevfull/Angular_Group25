@@ -1,0 +1,4 @@
+<div class="container">
+    <app-user-list [users]="usersActive"></app-user-list>
+    <app-user-form (onCreate)="usersActive.push($event)"></app-user-form>
+</div>

@@ -1,0 +1,23 @@
+<form>
+    <div class="field">
+        <label for="name">Nombre</label>
+        <input id="name" type="text" name="name" (input)="onInputName($event)" #nameInput>
+    </div>
+
+    <div class="field">
+        <label for="lastname">Apellido</label>
+        <input id="lastname" type="text" name="lastname" (input)="onInputLastname($event)" #lastnameInput>
+    </div>
+
+    <div class="field">
+        <label for="email">Correo</label>
+        <input id="email" type="email" name="email" (input)="onInputEmail($event)" #emailInput>
+    </div>
+
+    <div class="field">
+        <label for="age">Edad</label>
+        <input id="age" type="number" name="age" (input)="onInputAge($event)" #ageInput>
+    </div>
+
+    <button type="button" (click)="onSubmit()">Enviar</button>
+</form>
