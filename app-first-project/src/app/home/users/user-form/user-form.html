@@ -19,5 +19,14 @@
         <input id="age" type="number" name="age" (input)="onInputAge($event)" #ageInput>
     </div>
 
-    <button type="button" (click)="onSubmit()">Enviar</button>
+    <div class="field">
+        <label for="gender">Género</label>
+        <select id="gender" name="gender" (input)="onInputGender($event.target!)" #genderInput>
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
+        </select>
+    </div>
+
+    <button type="button" (click)="onSubmit()">{{title}}</button>
+    <button type="button" (click)="reset()">Reset</button>
 </form>

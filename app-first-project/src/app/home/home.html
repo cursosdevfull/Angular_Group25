@@ -1,4 +1,5 @@
 <div class="container">
-    <app-user-list [users]="usersActive"></app-user-list>
-    <app-user-form (onCreate)="usersActive.push($event)"></app-user-form>
+    <app-user-list [users]="usersActive" (onDelete)="delete($event)" (onEdit)="edit($event)"></app-user-list>
+    <!-- <app-user-form (onCreate)="usersActive = [...usersActive, $event]" [editUser]="userSelected"></app-user-form> -->
+    <app-user-form (onCreate)="create($event)" [editUser]="userSelected"></app-user-form>
 </div>

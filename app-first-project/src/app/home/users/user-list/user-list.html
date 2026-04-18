@@ -1,10 +1,10 @@
 <div class="container">
     <app-user-title [columns]="columns"></app-user-title>
 
-    @for(user of usersActive; track user){
+    @for(user of usersActive; track user; let index = $index){
     <!--     <app-user-detail name="{{user.name}}" lastname="{{user.lastname}}" email="{{user.email}}"></app-user-detail> -->
-    <app-user-detail [name]="user.name" [lastname]="user.lastname" [email]="user.email"
-        [age]="user.age"></app-user-detail>
+    <app-user-detail [user]="user" [index]="index" (onDelete)="delete($event)"
+        (onEdit)="edit($event)"></app-user-detail>
     }
 </div>
 
