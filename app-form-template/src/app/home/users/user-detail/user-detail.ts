@@ -18,10 +18,6 @@ export class UserDetail {
   @Input() email!: string;
   @Input() age!: number; */
 
-  ngOnChanges() {
-    console.log('UserDetail - ngOnChanges', this.user);
-  }
-
   delete(event: Event) {
     event.stopPropagation();
     this.onDelete.emit(this.index);

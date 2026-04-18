@@ -27,6 +27,14 @@ form {
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
+    }
+
+    span.error {
+        color: red;
+        font-size: 10px;
+        margin-top: 5px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
     button {

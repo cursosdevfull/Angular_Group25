@@ -1,0 +1,65 @@
+<form #userForm="ngForm" limitByGender>
+    <div class="field">
+        <label for="name">Nombre</label>
+        <input id="name" type="text" name="name" required [(ngModel)]="formData.name" #name="ngModel"
+            [lengthValidation]="{min:3, fieldName:'nombre'}">
+        @if(name.errors?.['required'] && name.touched) {
+        <span class="error">El campo nombre es requerido</span>
+        }
+
+        @if(name.errors?.['lengthInvalid'] && name.touched) {
+        <span class="error">{{name.errors?.['lengthInvalid']}}</span>
+        }
+    </div>
+
+    <div class="field">
+        <label for="lastname">Apellido</label>
+        <input id="lastname" type="text" required name="lastname" [(ngModel)]="formData.lastname" #lastname="ngModel"
+            [lengthValidation]="{min:3, fieldName:'apellido'}">
+        @if(lastname.errors?.['required'] && lastname.touched) {
+        <span class="error">El campo apellido es requerido</span>
+        }
+
+        @if(lastname.errors?.['lengthInvalid'] && lastname.touched) {
+        <span class="error">{{lastname.errors?.['lengthInvalid']}}</span>
+        }
+    </div>
+
+    <div class="field">
+        <label for="email">Correo</label>
+        <input id="email" type="email" required name="email" [(ngModel)]="formData.email" #email="ngModel"
+            [emailValidation]="{fieldName: 'correo'}">
+        @if(email.errors?.['required'] && email.touched) {
+        <span class="error">El campo correo es requerido</span>
+        }
+        @if(email.errors?.['emailInvalid'] && email.touched) {
+        <span class="error">{{email.errors?.['emailInvalid']}}</span>
+        }
+    </div>
+
+    <div class="field">
+        <label for="age">Edad</label>
+        <input id="age" type="number" required name="age" [(ngModel)]="formData.age" #age="ngModel"
+            [rangeValidation]="{min:18, max:120, fieldName:'edad'}">
+        @if(age.errors?.['required'] && age.touched) {
+        <span class="error">El campo edad es requerido</span>
+        }
+        @if(age.errors?.['rangeInvalid'] && age.touched) {
+        <span class="error">{{age.errors?.['rangeInvalid']}}</span>
+        }
+    </div>
+
+    <div class="field">
+        <label for="gender">Género</label>
+        <select id="gender" name="gender" [(ngModel)]="formData.gender" required>
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
+        </select>
+    </div>
+
+    <button type="button" (click)="onSubmit()">{{title}}</button>
+    <button type="button" (click)="reset()">Reset</button>
+    @if(userForm.errors?.["limitByGender"] && userForm.touched) {
+    <span class="error">{{userForm.errors?.["limitByGender"]}}</span>
+    }
+</form>
