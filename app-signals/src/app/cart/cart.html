@@ -1,0 +1,3 @@
+@for(item of cart(); track item.id) {
+<app-cart-item [item]="item" (onRemove)="removeItem($event)"></app-cart-item>
+}

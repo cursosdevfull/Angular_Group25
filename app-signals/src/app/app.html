@@ -1,0 +1,17 @@
+<!-- <div>Operator 1: {{ operator1() }}</div>
+<div>Operator 2: {{ operator2() }}</div>
+<div>Sum: {{ sum() }}</div>
+<div>Linked Sum: {{ linkedSum() }}</div>
+<button (click)="operator2.set(100);">Set Operator 2 to 100</button>
+<button (click)="operator1.update(prevValue => prevValue + 10)">Increment Operator 1 by 10</button>
+<button (click)="operator1.set(0); operator2.set(0);">Reset Operators</button>
+<button (click)="linkedSum.update(prev => prev * 20)">Multiply Sum by 20</button> -->
+<div class="container">
+  <div class="zone">
+    <app-list-product (onAddToCart)="addToCart($event)"></app-list-product>
+  </div>
+  <div class="zone">
+    <app-cart [cart]="cart()" (onRemove)="removeItemCart($event)"></app-cart>
+  </div>
+
+</div>

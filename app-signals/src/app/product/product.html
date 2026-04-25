@@ -1,0 +1,9 @@
+@let prd = product();
+@if(prd) {
+<div>
+    <strong>{{ prd.name }}</strong>
+    <span>US$ {{ prd.price }}</span>
+    <hr>
+    <button (click)="addToCart(prd)">Add to Cart</button>
+</div>
+}

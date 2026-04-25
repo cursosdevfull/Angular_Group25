@@ -1,0 +1,9 @@
+@let it = item();
+@if(it) {
+<div>
+    <strong>{{ it.name }}</strong>
+    <span>US$ {{ it.price }}</span>
+    <span>Quantity: {{ it.quantity }}</span>
+    <button (click)="removeItem()">Remove</button>
+</div>
+}
