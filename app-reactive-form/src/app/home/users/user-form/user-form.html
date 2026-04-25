@@ -1,0 +1,37 @@
+<form [formGroup]="fg">
+    <div class="field">
+        <label for="name">Nombre</label>
+        <input id="name" type="text" name="name" formControlName="name">
+        <app-error-validations [fg]="fg" controlName="name" title="Nombre"></app-error-validations>
+    </div>
+
+    <div class="field">
+        <label for="lastname">Apellido</label>
+        <input id="lastname" type="text" name="lastname" formControlName="lastname">
+        <app-error-validations [fg]="fg" controlName="lastname" title="Apellido"></app-error-validations>
+    </div>
+
+    <div class="field">
+        <label for="email">Correo</label>
+        <input id="email" type="email" name="email" formControlName="email">
+        <app-error-validations [fg]="fg" controlName="email" title="Correo"></app-error-validations>
+    </div>
+
+    <div class="field">
+        <label for="age">Edad</label>
+        <input id="age" type="number" name="age" formControlName="age">
+        <app-error-validations [fg]="fg" controlName="age" title="Edad"></app-error-validations>
+    </div>
+
+    <div class="field">
+        <label for="gender">Género</label>
+        <select id="gender" name="gender" formControlName="gender">
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
+        </select>
+    </div>
+
+    <button type="button" (click)="onSubmit()">{{title}}</button>
+    <button type="button" (click)="reset()">Reset</button>
+    <app-error-validations [fg]="fg"></app-error-validations>
+</form>

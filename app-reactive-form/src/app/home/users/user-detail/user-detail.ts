@@ -13,10 +13,6 @@ export class UserDetail {
   @Input() index!: number;
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
   @Output() onEdit: EventEmitter<IUser> = new EventEmitter();
-  /*   @Input() name!: string;
-  @Input() lastname!: string;
-  @Input() email!: string;
-  @Input() age!: number; */
 
   delete(event: Event) {
     event.stopPropagation();
