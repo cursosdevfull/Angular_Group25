@@ -1,4 +1,4 @@
-import { Component, Inject, output } from '@angular/core';
+import { Component, Inject, Signal, WritableSignal } from '@angular/core';
 import { IProduct } from '../interfaces/product';
 import { Product } from '../product/product';
 import { ProductService } from '../services/product';
@@ -10,27 +10,16 @@ import { ProductService } from '../services/product';
   styleUrl: './list-product.scss',
 })
 export class ListProduct {
-  //onAddToCart = output<IProduct>()
+  productService: ProductService;
 
-  productService: ProductService
-  
-  public listProducts: IProduct[]
+  public listProducts: Signal<IProduct[]>;
 
-  constructor(@Inject("ProvideProduct") productService: ProductService) {
+  constructor(@Inject('ProvideProduct') productService: ProductService) {
     this.productService = productService;
-    this.listProducts = this.productService.listProducts();
-    this.listProducts.forEach(p => p.stock = 0)
+    this.listProducts = this.productService.listProducts;
   }
-
 
   public addToCart(product: IProduct) {
     this.productService.addToCart(product);
-    //this.productService.reduceStock(product.id);
-   /*  console.log('Product added to cart:', product);
-    this.onAddToCart.emit(product);
-    const prd = this.productService.listProducts.find(p => p.id === product.id);
-    if (prd) {
-      prd.stock -= 1;
-    } */
   }
 }

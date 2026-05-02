@@ -1,10 +1,19 @@
 @let prd = product();
 @if(prd) {
-<div>
-    <strong>{{ prd.name }}</strong>
-    <span>US$ {{ prd.price }}</span>
-    <span>Stock: {{ prd.stock }}</span>
-    <hr>
-    <button (click)="addToCart(prd)">Add to Cart</button>
+<div class="product-card">
+    <div class="product-card__body">
+        <h3 class="product-card__name">{{ prd.name }}</h3>
+        <div class="product-card__meta">
+            <span class="product-card__price">US$ {{ prd.price }}</span>
+            <span class="product-card__stock" [class.out-of-stock]="prd.stock === 0">
+                {{ prd.stock > 0 ? prd.stock + ' in stock' : 'Out of stock' }}
+            </span>
+        </div>
+    </div>
+    <div class="product-card__footer">
+        <button class="btn btn--primary" (click)="addToCart(prd)" [disabled]="prd.stock === 0">
+            Add to Cart
+        </button>
+    </div>
 </div>
 }

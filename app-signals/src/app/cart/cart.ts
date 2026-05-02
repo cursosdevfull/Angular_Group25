@@ -1,4 +1,4 @@
-import { Component, Inject, WritableSignal } from '@angular/core';
+import { Component, computed, Inject, Signal, WritableSignal } from '@angular/core';
 import { CartItem } from '../cart-item/cart-item';
 import { IProduct } from '../interfaces/product';
 import { ProductService } from '../services/product';
@@ -10,20 +10,17 @@ import { ProductService } from '../services/product';
   styleUrl: './cart.scss',
 })
 export class Cart {
-/*   cart = input.required<(IProduct & {quantity: number})[]>()
-  onRemove = output<number>()
+  productService: ProductService;
 
-  removeItem(productId: number) {
-    this.onRemove.emit(productId);
-  } */
+  listProductsCart: Signal<(IProduct & { quantity: number })[]>;
 
-  productService: ProductService
+  total = computed(() => {
+    return this.listProductsCart().reduce((acc, item) => acc + item.price * item.quantity, 0);
+  });
 
-  cart: WritableSignal<(IProduct & {quantity: number})[]>;
-
-  constructor(@Inject("ProvideProduct") productService: ProductService) {
+  constructor(@Inject('ProvideProduct') productService: ProductService) {
     this.productService = productService;
-    this.cart = this.productService.cart;
+    this.listProductsCart = this.productService.itemsInCart;
   }
 
   removeItem(productId: number) {

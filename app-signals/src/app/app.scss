@@ -1,9 +1,47 @@
-.container {
+.navbar {
+    display: flex;
+    align-items: center;
+    background: var(--color-primary);
+    padding: 0 2rem;
+    height: 64px;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    &__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    &__logo {
+        font-size: 1.6rem;
+    }
+
+    &__title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+    }
+}
+
+.main-layout {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 
-    .zone {
-        flex: 1
+    &__products {
+        flex: 2;
+        min-width: 300px;
+    }
+
+    &__cart {
+        flex: 1;
+        min-width: 280px;
     }
 }
