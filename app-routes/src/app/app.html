@@ -1,0 +1,26 @@
+<h2>Current date and time: {{ currentDateTime }}</h2>
+
+<ul>
+  <li><a routerLink="/">Base</a></li>
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/economics">Economics</a></li>
+  <li><a routerLink="/politics">Politics</a></li>
+  <li><a routerLink="/sports">Sports</a></li>
+  <li>Magazines
+    <ul>
+      <li><a routerLink="/magazines/angeles">Angeles Post</a></li>
+      <li><a routerLink="/magazines/chicago">Chicago News</a></li>
+      <li><a routerLink="/magazines/new-york">New York Times</a></li>
+      <li><a routerLink="/magazines/washington">Washington Post</a></li>
+    </ul>
+  </li>
+  <li><a routerLink="/magazines-economics">Magazines Economics</a>
+    <ul>
+      <li><a routerLink="/magazines-economics/gestion">Gestion</a></li>
+      <li><a routerLink="/magazines-economics/rumbo-economico">Rumbo Economico</a></li>
+      <li><a routerLink="/magazines-economics/semana-economica">Semana Economica</a></li>
+    </ul>
+  </li>
+</ul>
+
+<router-outlet />
