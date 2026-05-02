@@ -13,6 +13,10 @@ export class Product {
 
   addToCart(product: IProduct) {
     console.log('Adding to cart:', product);
+    if(product.stock <= 0) {
+      console.warn('Product is out of stock:', product);
+      return;
+    }
     this.onAddToCart.emit(product);
   }
 }

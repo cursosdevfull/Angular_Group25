@@ -1,7 +1,8 @@
-import { Component, computed, effect, linkedSignal, signal } from '@angular/core';
-import { ListProduct } from './list-product/list-product';
+import { Component, Inject, WritableSignal } from '@angular/core';
 import { Cart } from './cart/cart';
 import { IProduct } from './interfaces/product';
+import { ListProduct } from './list-product/list-product';
+import { ProductService } from './services/product';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,16 @@ import { IProduct } from './interfaces/product';
   styleUrl: './app.scss'
 })
 export class App {
-  cart = signal<(IProduct & {quantity: number})[]>([]);
+  //productService = ProductService.create()
+/*   productService: ProductService
+
+  cart: WritableSignal<(IProduct & {quantity: number})[]>;
+
+  constructor(@Inject("ProvideProduct") productService: ProductService) {
+    this.productService = productService;
+    this.cart = this.productService.cart;
+  } */
+
 /*   operator1 = signal(30)
   operator2 = signal(50)
 
@@ -24,7 +34,7 @@ export class App {
     })
   } */
 
-    addToCart(product: IProduct) {
+   /*  addToCart(product: IProduct) {
       const existingProduct = this.cart().find(item => item.id === product.id);
       if (existingProduct) {
         this.cart.update(prev =>
@@ -38,6 +48,6 @@ export class App {
     }
 
     removeItemCart(productId: number) {
-      this.cart.update(prev => prev.filter(item => item.id !== productId));
-    }
+      this.productService.cart.update(prev => prev.filter(item => item.id !== productId));
+    } */
 }

@@ -8,10 +8,12 @@
 <button (click)="linkedSum.update(prev => prev * 20)">Multiply Sum by 20</button> -->
 <div class="container">
   <div class="zone">
-    <app-list-product (onAddToCart)="addToCart($event)"></app-list-product>
+    <!-- <app-list-product (onAddToCart)="addToCart($event)"></app-list-product> -->
+    <app-list-product></app-list-product>
   </div>
   <div class="zone">
-    <app-cart [cart]="cart()" (onRemove)="removeItemCart($event)"></app-cart>
+    <!--     <app-cart [cart]="cart()" (onRemove)="removeItemCart($event)"></app-cart> -->
+    <app-cart></app-cart>
   </div>
 
 </div>
