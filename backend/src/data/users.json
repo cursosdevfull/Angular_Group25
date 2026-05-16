@@ -1,0 +1,17 @@
+[
+  {
+    "email": "admin@backoffice.com",
+    "password": "Admin1234",
+    "name": "Admin User"
+  },
+  {
+    "email": "manager@backoffice.com",
+    "password": "Manager123",
+    "name": "Manager User"
+  },
+  {
+    "email": "sales@backoffice.com",
+    "password": "Sales1234",
+    "name": "Sales User"
+  }
+]

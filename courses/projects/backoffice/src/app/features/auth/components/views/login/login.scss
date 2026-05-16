@@ -21,13 +21,8 @@
             gap: 10px;
             margin-bottom: 20px;
 
-            input {
-                border: 1px solid rgb(224, 224, 223);
-                border-radius: 4px;
-                padding: 8px;
-                line-height: 14px;
-                font-family: Verdana;
-                font-size: 12px;
+            mat-form-field {
+                width: 100%;
             }
         }
 

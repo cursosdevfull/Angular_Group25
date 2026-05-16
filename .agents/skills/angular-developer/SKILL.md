@@ -82,6 +82,53 @@ When implementing dependency injection in Angular, follow these guidelines:
 - **Injection Context**: Where `inject()` is allowed, `runInInjectionContext`, and `assertInInjectionContext`. Read [injection-context.md](references/injection-context.md)
 - **Hierarchical Injectors**: The `EnvironmentInjector` vs `ElementInjector`, resolution rules, modifiers (`optional`, `skipSelf`), and `providers` vs `viewProviders`. Read [hierarchical-injectors.md](references/hierarchical-injectors.md)
 
+## Hexagonal Architecture (Ports and Adapters)
+
+When a feature uses hexagonal architecture, implement and review it with these rules:
+
+1. Keep the dependency direction inward: components, routes, and adapters may depend on application/domain, but domain must not depend on Angular or infrastructure.
+2. Keep domain pure TypeScript. Domain entities, value objects, and port contracts must not import from `@angular/*`.
+3. Define both input and output ports in domain:
+   - input port (use-cases) for what UI/controllers invoke.
+   - output port (gateway/repository) for what application invokes.
+4. Keep application services framework-agnostic when possible:
+   - no Angular decorators inside application use-case classes.
+   - constructor receives output port interface from domain.
+5. Implement infrastructure in adapters that satisfy output ports.
+6. Avoid string DI tokens for cross-layer contracts. Use typed `InjectionToken` constants.
+7. Place feature wiring in a composition root (for example `feature/auth.di.ts`) and expose a provider factory function (for example `provideAuth()`).
+8. Register feature providers in route-level `providers` (or higher composition root), not inside presentation components.
+9. Inject only the input port in components; components should not import concrete adapter/application classes unless explicitly required by the user.
+10. Validate with a build after changes (`ng build <project>`) and fix DI/type issues before finishing.
+
+Recommended feature shape:
+
+- `domain/`: entities, value objects, input/output ports.
+- `application/`: use-case implementations.
+- `adapters/`: infrastructure implementations for output ports.
+- `components/` and `routes`: driving adapters (UI/navigation).
+- `feature.di.ts`: typed tokens and provider factory.
+
+Minimal DI wiring pattern:
+
+```ts
+import { InjectionToken, Provider } from '@angular/core';
+
+export const FEATURE_PORT = new InjectionToken<FeaturePort>('FEATURE_PORT');
+export const FEATURE_USE_CASES = new InjectionToken<FeatureUseCases>('FEATURE_USE_CASES');
+
+export const provideFeature = (): Provider[] => [
+  { provide: FEATURE_PORT, useClass: FeatureAdapter },
+  {
+    provide: FEATURE_USE_CASES,
+    useFactory: (port: FeaturePort) => new FeatureApplication(port),
+    deps: [FEATURE_PORT],
+  },
+];
+```
+
+If the user asks for strict hexagonal architecture, reject patterns that place adapter/app concrete providers inside UI components, and move them to route-level or app-level composition roots.
+
 ## Angular Aria
 
 When building accessible custom components for any of the following patterns: Accordion, Listbox, Combobox, Menu, Tabs, Toolbar, Tree, Grid, consult the following reference:
