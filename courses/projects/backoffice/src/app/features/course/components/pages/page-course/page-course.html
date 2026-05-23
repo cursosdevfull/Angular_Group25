@@ -1,0 +1,9 @@
+<cdev-lib-title [props]="{ title: 'Courses', icon: 'school' }">
+    <button matButton="filled" (click)="openForm()">
+        <mat-icon>add</mat-icon>
+        Add Course
+    </button>
+</cdev-lib-title>
+<cdev-lib-container css="calc(100vh - 64px - 40px - 56px)">
+    <cdev-course (onSelectedRow)="openForm($event)"></cdev-course>
+</cdev-lib-container>

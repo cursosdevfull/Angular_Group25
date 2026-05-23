@@ -1,4 +1,4 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, inject, Inject, signal } from '@angular/core';
 import { form, FormField, pattern, required } from '@angular/forms/signals';
 import { Auth, TAuth, TAuthUseCasesPort } from '../../../domain';
 import { ErrorValidations } from 'lib';
@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AUTH_USE_CASES_PORT } from '../../../auth.di';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cdev-login',
@@ -29,7 +30,9 @@ export class Login {
     pattern(schema.password, /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, { message: 'Password must be at least 8 characters long and contain both letters and numbers' });
   })
 
-  constructor(@Inject(AUTH_USE_CASES_PORT) private readonly usecase: TAuthUseCasesPort) {}
+  router = inject(Router);
+
+  constructor(@Inject(AUTH_USE_CASES_PORT) private readonly usecase: TAuthUseCasesPort) { }
 
   async login() {
     const { email, password } = this.userForm().value();
@@ -40,6 +43,10 @@ export class Login {
 
     const auth: Auth = new Auth({ email, password });
     const response = await this.usecase.login(auth);
-    console.log(response);
+
+    if (response) {
+      this.router.navigate(['/layout/dashboard']);
+    }
+
   }
 }

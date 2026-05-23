@@ -1,0 +1,15 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-bottom: 1px solid #e1e1e1;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+    .btn-menu {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        gap: 10px;
+    }
+
+}

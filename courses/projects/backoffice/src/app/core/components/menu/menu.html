@@ -1,0 +1,8 @@
+<img src="assets/images/logo.png" alt="Logo" />
+
+@for(route of routes; track route){
+<a [routerLink]=" route.path" routerLinkActive="active">
+<mat-icon>{{ route.icon }}</mat-icon>
+<p>{{ route.title }}</p>
+</a>
+}

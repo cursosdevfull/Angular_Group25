@@ -84,50 +84,64 @@ When implementing dependency injection in Angular, follow these guidelines:
 
 ## Hexagonal Architecture (Ports and Adapters)
 
-When a feature uses hexagonal architecture, implement and review it with these rules:
+This workspace already contains a reference implementation at:
 
-1. Keep the dependency direction inward: components, routes, and adapters may depend on application/domain, but domain must not depend on Angular or infrastructure.
-2. Keep domain pure TypeScript. Domain entities, value objects, and port contracts must not import from `@angular/*`.
-3. Define both input and output ports in domain:
-   - input port (use-cases) for what UI/controllers invoke.
-   - output port (gateway/repository) for what application invokes.
-4. Keep application services framework-agnostic when possible:
-   - no Angular decorators inside application use-case classes.
-   - constructor receives output port interface from domain.
-5. Implement infrastructure in adapters that satisfy output ports.
-6. Avoid string DI tokens for cross-layer contracts. Use typed `InjectionToken` constants.
-7. Place feature wiring in a composition root (for example `feature/auth.di.ts`) and expose a provider factory function (for example `provideAuth()`).
-8. Register feature providers in route-level `providers` (or higher composition root), not inside presentation components.
-9. Inject only the input port in components; components should not import concrete adapter/application classes unless explicitly required by the user.
-10. Validate with a build after changes (`ng build <project>`) and fix DI/type issues before finishing.
+- `courses/projects/backoffice/src/app/features/auth`
 
-Recommended feature shape:
+When the user asks for hexagonal architecture, follow this exact layering and dependency direction:
 
-- `domain/`: entities, value objects, input/output ports.
+1. `domain/` is the inner core:
+  - Keep entities and contracts in domain (for example `auth.ts`, `auth.port.ts`, `auth-usecases.port.ts`).
+  - Define output ports (driven ports) and input ports (use-cases) as TypeScript contracts.
+  - Domain must not depend on infrastructure details.
+2. `application/` implements input ports:
+  - Use application classes to orchestrate the use-case (for example `AuthApplication implements TAuthUseCasesPort`).
+  - Inject only domain output port contracts in the constructor (for example `TAuthPort`).
+  - Keep business flow in application, not in components.
+3. `adapters/` implements output ports:
+  - Implement infrastructure details in adapters (for example `AuthAdapter implements TAuthPort`).
+  - HTTP, persistence, and external service calls live here.
+4. `auth.di.ts` is the composition root for the feature:
+  - Declare typed `InjectionToken`s for each port (`AUTH_PORT`, `AUTH_USE_CASES_PORT`).
+  - Expose a provider factory (`provideAuth`) that wires adapter + application.
+5. `auth.routes.ts` owns feature-level provider registration:
+  - Register `providers: provideAuth()` at route level.
+  - Do not wire adapter/application concrete classes directly inside UI components.
+
+Reference shape to use in feature modules:
+
+- `domain/`: entities + port contracts.
 - `application/`: use-case implementations.
-- `adapters/`: infrastructure implementations for output ports.
-- `components/` and `routes`: driving adapters (UI/navigation).
-- `feature.di.ts`: typed tokens and provider factory.
+- `adapters/`: infrastructure implementations.
+- `auth.di.ts`: typed tokens + providers factory.
+- `auth.routes.ts`: route-level composition and provider activation.
+- `components/`: presentation and user interaction.
 
-Minimal DI wiring pattern:
+Reference DI wiring pattern (same style as `features/auth`):
 
 ```ts
 import { InjectionToken, Provider } from '@angular/core';
 
 export const FEATURE_PORT = new InjectionToken<FeaturePort>('FEATURE_PORT');
-export const FEATURE_USE_CASES = new InjectionToken<FeatureUseCases>('FEATURE_USE_CASES');
+export const FEATURE_USE_CASES_PORT = new InjectionToken<FeatureUseCasesPort>('FEATURE_USE_CASES_PORT');
 
 export const provideFeature = (): Provider[] => [
   { provide: FEATURE_PORT, useClass: FeatureAdapter },
   {
-    provide: FEATURE_USE_CASES,
-    useFactory: (port: FeaturePort) => new FeatureApplication(port),
-    deps: [FEATURE_PORT],
+   provide: FEATURE_USE_CASES_PORT,
+   useFactory: (port: FeaturePort) => new FeatureApplication(port),
+   deps: [FEATURE_PORT],
   },
 ];
 ```
 
-If the user asks for strict hexagonal architecture, reject patterns that place adapter/app concrete providers inside UI components, and move them to route-level or app-level composition roots.
+Conventions used in this repository:
+
+- Ports are currently declared as `type` aliases prefixed with `T` (for example `TAuthPort`, `TAuthUseCasesPort`).
+- `domain/index.ts` should re-export domain contracts used by application and DI.
+- Keep the dependency flow as: `components/routes -> application -> domain`, and `adapters -> domain`.
+
+If the user requests strict hexagonal architecture, reject designs that bypass ports (for example components calling adapter/infrastructure directly).
 
 ## Angular Aria
 

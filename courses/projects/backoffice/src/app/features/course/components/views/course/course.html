@@ -1,0 +1,9 @@
+<cdev-lib-table [data]="data" [metaColumns]="metaColumns" (onSelectedRow)="selectedRow($event)">
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef style="width:60px"></th>
+        <td mat-cell *matCellDef="let element">
+            <mat-icon>delete_outline</mat-icon>
+        </td>
+    </ng-container>
+</cdev-lib-table>
+<cdev-lib-paginator [length]="dataOriginal.length" (onPageChanged)="loadDataByPage($event)"></cdev-lib-paginator>
