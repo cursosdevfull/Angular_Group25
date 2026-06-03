@@ -1,10 +1,9 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../../config/env");
-const { getUsers } = require("./auth.repository");
+const { getUserByCredentials } = require("./auth.repository");
 
 async function login({ email, password }) {
-  const users = await getUsers();
-  const user = users.find((item) => item.email === email && item.password === password);
+  const user = await getUserByCredentials({ email, password });
 
   if (!user) {
     return null;

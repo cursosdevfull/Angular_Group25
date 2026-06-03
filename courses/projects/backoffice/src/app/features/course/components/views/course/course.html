@@ -1,4 +1,4 @@
-<cdev-lib-table [data]="data" [metaColumns]="metaColumns" (onSelectedRow)="selectedRow($event)">
+<cdev-lib-table [data]="data()" [metaColumns]="metaColumns" (onSelectedRow)="selectedRow($event)">
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef style="width:60px"></th>
         <td mat-cell *matCellDef="let element">
@@ -6,4 +6,4 @@
         </td>
     </ng-container>
 </cdev-lib-table>
-<cdev-lib-paginator [length]="dataOriginal.length" (onPageChanged)="loadDataByPage($event)"></cdev-lib-paginator>
+<cdev-lib-paginator [length]="totalItems" (onPageChanged)="loadDataByPage($event)"></cdev-lib-paginator>

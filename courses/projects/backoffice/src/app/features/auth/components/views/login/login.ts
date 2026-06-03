@@ -1,4 +1,4 @@
-import { Component, inject, Inject, signal } from '@angular/core';
+import { Component, effect, inject, Inject, signal } from '@angular/core';
 import { form, FormField, pattern, required } from '@angular/forms/signals';
 import { Auth, TAuth, TAuthUseCasesPort } from '../../../domain';
 import { ErrorValidations } from 'lib';
@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AUTH_USE_CASES_PORT } from '../../../auth.di';
 import { Router } from '@angular/router';
+import { Storage } from '../../../../../core/services';
 
 @Component({
   selector: 'cdev-login',
@@ -31,8 +32,17 @@ export class Login {
   })
 
   router = inject(Router);
+  storage = inject(Storage);
 
-  constructor(@Inject(AUTH_USE_CASES_PORT) private readonly usecase: TAuthUseCasesPort) { }
+  constructor(@Inject(AUTH_USE_CASES_PORT) private readonly usecase: TAuthUseCasesPort) {
+    effect(() => {
+      const response = this.usecase.responseLoging();
+      if (response && typeof response !== 'string' && 'accessToken' in response) {
+        this.storage.setItem('token', response.accessToken);
+        this.router.navigate(['/layout/dashboard']);
+      }
+    })
+  }
 
   async login() {
     const { email, password } = this.userForm().value();
@@ -41,12 +51,6 @@ export class Login {
       return;
     }
 
-    const auth: Auth = new Auth({ email, password });
-    const response = await this.usecase.login(auth);
-
-    if (response) {
-      this.router.navigate(['/layout/dashboard']);
-    }
-
+    this.usecase.auth.set(new Auth({ email, password }));
   }
 }

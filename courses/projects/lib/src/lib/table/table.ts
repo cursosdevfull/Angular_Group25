@@ -12,7 +12,7 @@ import { Scrollbars } from '../scrollbars/scrollbars';
 })
 export class Table {
   metaColumns = input.required<MetaColumns<any>>();
-  data = input.required<any[]>();
+  data = input<any[]>([]);
   table = viewChild.required<MatTable<any>>(MatTable)
   columnDefs = contentChildren<MatColumnDef>(MatColumnDef);
   onSelectedRow = output<any>();

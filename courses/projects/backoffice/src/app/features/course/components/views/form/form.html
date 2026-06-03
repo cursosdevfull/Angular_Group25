@@ -1,12 +1,24 @@
 <mat-dialog-content>
+    <mat-toolbar>
+        <h2>{{ courseForm.id ? 'Edit' : 'Create' }}</h2>
+        <button matIconButton mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
     <form>
-        <mat-form-field>
-            <mat-label>Course Name</mat-label>
-            <input matInput type="text" id="name" [formField]="form.name" />
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Course Level</mat-label>
-            <input matInput type="text" id="level" [formField]="form.level" />
-        </mat-form-field>
+        <div class="fields">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput type="text" id="name" [formField]="courseForm.name" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Level</mat-label>
+                <input matInput type="text" id="level" [formField]="courseForm.level" />
+            </mat-form-field>
+        </div>
+        <div class="actions">
+            <button matButton="filled" type="button" (click)="save()">{{ courseForm.id ? 'Update' : 'Create' }}</button>
+            <button matButton type="button" mat-dialog-close>Cancel</button>
+        </div>
     </form>
 </mat-dialog-content>

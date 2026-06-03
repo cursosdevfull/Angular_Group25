@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class Modal {
   modal = inject(MatDialog)
 
-  open(component: any, data?: any) {
-    this.modal.open(component, { data })
+  open(component: any, config?: MatDialogConfig) {
+    return this.modal.open(component, config);
   }
 }

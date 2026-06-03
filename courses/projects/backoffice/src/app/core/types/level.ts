@@ -1,0 +1,1 @@
+export type LEVEL = 'Beginner' | 'Intermediate' | 'Advanced';

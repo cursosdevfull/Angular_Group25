@@ -19,17 +19,11 @@ export class Notifications {
     });
   }
 
-  error( status: number, message: string = "",duration: number = 3000) {
+  error(status: number, message: string = "", duration: number = 3000) {
     const fullMessage = message ? message : MessageError[status] || "An error occurred";
 
-    this.notifier.openFromComponent(Error, {
-      data: fullMessage,
+    this.notifier.open(fullMessage, undefined, {
       duration,
-      panelClass: ['error-snackbar']
     });
-
-    /*this.notifier.open(fullMessage, undefined, {
-      duration,
-    });*/
   }
 }

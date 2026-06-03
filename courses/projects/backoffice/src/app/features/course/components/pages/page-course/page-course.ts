@@ -16,6 +16,12 @@ export class PageCourse {
   modal = inject(Modal)
 
   openForm(row: any = null) {
-    this.modal.open(Form, { data: row })
+    const ref = this.modal.open(Form, { data: row, panelClass: 'course-modal', disableClose: true })
+
+    ref.afterClosed().subscribe(result => {
+      if (result) {
+        //alert("Course saved successfully"); // Handle any actions after the modal is closed, if needed
+      }
+    });
   }
 }
