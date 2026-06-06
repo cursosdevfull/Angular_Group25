@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Loader } from 'lib';
+import { Loader } from 'cursosdev_angular25';
 
 @Component({
   selector: 'cdev-root',

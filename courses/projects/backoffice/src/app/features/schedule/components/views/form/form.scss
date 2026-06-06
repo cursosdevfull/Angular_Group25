@@ -1,0 +1,35 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.schedule-modal {
+    .mat-mdc-dialog-container .mat-mdc-dialog-content {
+        padding: 0 0 20px 0;
+
+        form {
+            padding: 20px 20px 0 20px;
+            display: flex;
+            flex-direction: column;
+
+            .fields {
+                display: flex;
+                gap: 20px;
+
+                mat-form-field {
+                    flex: 1;
+                }
+            }
+
+            .actions {
+                border-top: 1px solid #ccc;
+                display: flex;
+                justify-content: center;
+                padding-top: 10px;
+            }
+        }
+    }
+}

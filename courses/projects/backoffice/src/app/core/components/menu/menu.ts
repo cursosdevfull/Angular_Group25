@@ -15,5 +15,6 @@ export class Menu {
     { title: 'Dashboard', path: '/layout/dashboard', icon: 'dashboard' },
     { title: 'Users', path: '/layout/users', icon: 'people' },
     { title: "Courses", path: '/layout/courses', icon: 'school' },
+    { title: 'Schedules', path: '/layout/schedules', icon: 'event' },
   ]
 }

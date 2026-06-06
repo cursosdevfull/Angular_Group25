@@ -3,6 +3,7 @@ const cors = require("cors");
 const { authRouter } = require("./modules/auth/auth.routes");
 const { usersRouter } = require("./modules/users/users.routes");
 const { coursesRouter } = require("./modules/courses/courses.routes");
+const { schedulesRouter } = require("./modules/schedules/schedules.routes");
 const { requireAuth } = require("./middlewares/auth.middleware");
 
 const app = express();
@@ -18,6 +19,7 @@ app.get("/health", (_req, res) => {
 apiRouter.use("/auth", authRouter);
 apiRouter.use("/users", requireAuth, usersRouter);
 apiRouter.use("/courses", requireAuth, coursesRouter);
+apiRouter.use("/schedules", requireAuth, schedulesRouter);
 
 app.use("/api", apiRouter);
 

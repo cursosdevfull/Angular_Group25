@@ -131,6 +131,12 @@ async function deleteCourseController(req, res) {
 
         return res.status(204).send();
     } catch (error) {
+        if (error && (error.code === "ER_ROW_IS_REFERENCED_2" || error.errno === 1451)) {
+            return res.status(409).json({
+                message: "Cannot delete course because it has at least one related schedule",
+            });
+        }
+
         return res.status(500).json({ message: "Internal server error" });
     }
 }

@@ -1,0 +1,23 @@
+<div class="date-time-picker">
+    <mat-form-field class="field date-field">
+        <mat-label>{{ label()}} (día)</mat-label>
+        <input matInput [matDatepicker]="datePicker" [value]="selectedDate()" [disabled]="disabled()"
+            [required]="required()" (dateChange)="onDateChange($event)" (blur)="onBlur()" />
+        <mat-datepicker-toggle matIconSuffix [for]="datePicker" [disabled]="disabled()"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker [disabled]="disabled()"></mat-datepicker>
+        @if(invalid() && touched()) {
+        <mat-error>
+            @for(error of errors(); track error.kind){
+            {{error.message}}
+            }
+        </mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field class="field time-field">
+        <mat-label>{{ label()}} (hora)</mat-label>
+        <input matInput type="time" [value]="selectedTime()" [disabled]="disabled()" [required]="required()"
+            (input)="onTimeChange($any($event.target).value)" (blur)="onBlur()" />
+    </mat-form-field>
+
+</div>

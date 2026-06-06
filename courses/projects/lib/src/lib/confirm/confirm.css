@@ -1,0 +1,12 @@
+mat-toolbar {
+    background-color: #368ff4;
+    color: white;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 15px !important;
+}

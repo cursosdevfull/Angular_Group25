@@ -1,7 +1,7 @@
 import { computed, signal } from "@angular/core";
 import { Course, CourseData, TCoursePort, TCourseUseCasesPort } from "../domain";
 import { toObservable, toSignal } from "@angular/core/rxjs-interop";
-import { switchMap, of } from "rxjs";
+import { map, switchMap, of } from "rxjs";
 import { PAGINATION } from "../../../core/types/pagination";
 
 export class CourseApplication implements TCourseUseCasesPort {
@@ -40,7 +40,9 @@ export class CourseApplication implements TCourseUseCasesPort {
         .pipe(
             switchMap(courseId => {
                 if (courseId) {
-                    return this.port.delete(courseId);
+                    return this.port.delete(courseId).pipe(
+                        map((response) => response ?? { message: 'Course deleted' })
+                    );
                 } return of(null);
             })
         );
@@ -88,7 +90,17 @@ export class CourseApplication implements TCourseUseCasesPort {
 
     responseGetByPage = toSignal<PAGINATION<CourseData> | { message: string } | null>(this._courseGetByPage, { initialValue: null });
 
-    courseDataUpdated = computed(() => !!this.responseDelete() || !!this.responseUpdate() || !!this.responseCreate());
+    courseDataUpdated = computed(() => {
+        const condition = !!this.responseDelete() || !!this.responseUpdate() || !!this.responseCreate();
+
+        if (condition) {
+            return Math.random()
+        }
+
+        return null;
+    });
+
+    courseRefresh = signal<number | null>(null);
 
     constructor(private readonly port: TCoursePort) { }
 

@@ -22,5 +22,7 @@ export type TCourseUseCasesPort = {
     courseGetByPage: WritableSignal<{ page: number, limit: number } | null>,
     responseGetByPage: Signal<PAGINATION<CourseData> | { message: string } | null>
 
-    courseDataUpdated: Signal<boolean>
+    courseDataUpdated: Signal<number | null>
+
+    courseRefresh: WritableSignal<number | null>
 }

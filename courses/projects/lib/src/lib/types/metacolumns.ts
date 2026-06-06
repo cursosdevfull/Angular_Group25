@@ -5,7 +5,7 @@ type DirectColumn<T> = {
 
 type ComputedColumn<T> = {
     label: string;
-    field: string;
+    field: keyof T & string;
     valueFn: (row: T) => unknown;
 }
 

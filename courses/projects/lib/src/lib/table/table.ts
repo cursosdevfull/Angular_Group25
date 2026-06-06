@@ -1,6 +1,6 @@
 import { Component, contentChildren, effect, input, output, signal, viewChild, ViewEncapsulation } from '@angular/core';
 import { MatColumnDef, MatTable, MatTableModule } from '@angular/material/table';
-import { MetaColumns } from '../types/metacolumns';
+import { isComputedColumn, MetaColumn } from '../types/metacolumns';
 import { Scrollbars } from '../scrollbars/scrollbars';
 
 @Component({
@@ -11,7 +11,7 @@ import { Scrollbars } from '../scrollbars/scrollbars';
   encapsulation: ViewEncapsulation.None
 })
 export class Table {
-  metaColumns = input.required<MetaColumns<any>>();
+  metaColumns = input.required<MetaColumn<any>[]>();
   data = input<any[]>([]);
   table = viewChild.required<MatTable<any>>(MatTable)
   columnDefs = contentChildren<MatColumnDef>(MatColumnDef);
@@ -31,5 +31,9 @@ export class Table {
 
   selectRow(row: any) {
     this.onSelectedRow.emit(row);
+  }
+
+  getCellValue(row: Record<string, unknown>, column: MetaColumn<unknown>) {
+    return isComputedColumn(column) ? column.valueFn(row) : row[column.field];
   }
 }

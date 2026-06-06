@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Container, Title } from 'lib';
+import { Container, Title } from 'cursosdev_angular25';
 
 @Component({
   selector: 'cdev-page-user',

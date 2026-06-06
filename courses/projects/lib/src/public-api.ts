@@ -13,3 +13,5 @@ export * from "./lib/table/table"
 export * from './lib/types/metacolumns';
 export * from "./lib/scrollbars/scrollbars";
 export * from "./lib/paginator/paginator"
+export * from './lib/services/confirm';
+export * from "./lib/date-time-picker/date-time-picker";

@@ -1,13 +1,14 @@
 import { Component, effect, inject, Inject, Injector, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { Paginator, Table } from 'lib';
+import { Confirm, Paginator, Table } from 'cursosdev_angular25';
 import { COURSE_USE_CASES_PORT } from '../../../course.di';
 import { CourseData, TCourseUseCasesPort } from '../../../domain';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'cdev-course',
-  imports: [Table, MatIconModule, MatTableModule, Paginator],
+  imports: [Table, MatIconModule, MatTableModule, Paginator, MatButtonModule],
   templateUrl: './course.html',
   styleUrl: './course.scss',
 })
@@ -26,6 +27,7 @@ export class Course {
   ];
 
   injector = inject(Injector);
+  confirmService = inject(Confirm);
 
   constructor(@Inject(COURSE_USE_CASES_PORT) private readonly usecase: TCourseUseCasesPort) {
     effect(() => {
@@ -37,9 +39,11 @@ export class Course {
     })
 
     effect(() => {
-      const update = this.usecase.courseDataUpdated()
+      const condition01 = this.usecase.courseDataUpdated()
+      const condition02 = this.usecase.courseRefresh();
+      const condition03 = this.usecase.responseDelete();
 
-      if (update) {
+      if (!!condition01 || !!condition02 || !!condition03) {
         this.loadDataByPage(this.currentPage);
       }
     })
@@ -55,5 +59,17 @@ export class Course {
 
   selectedRow(row: any) {
     this.onSelectedRow.emit(row);
+  }
+
+  deleteRow(event: Event, row: any) {
+    event.stopPropagation();
+
+    const reference = this.confirmService.confirm(`Are you sure you want to delete the course "${row.name}"?`);
+
+    reference.subscribe((result) => {
+      if (result) {
+        this.usecase.courseDelete.set(row.id);
+      }
+    });
   }
 }

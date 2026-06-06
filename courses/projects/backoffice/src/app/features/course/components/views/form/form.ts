@@ -9,7 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { Course, TCourseUseCasesPort } from '../../../domain';
 import { COURSE_USE_CASES_PORT, provideCourse } from '../../../course.di';
 import { LEVEL } from '../../../../../core/types';
-import { Notifications } from 'lib';
+import { Notifications } from 'cursosdev_angular25';
+import { MatSelectModule } from '@angular/material/select';
 
 interface ICourse {
   id?: number;
@@ -19,7 +20,7 @@ interface ICourse {
 
 @Component({
   selector: 'cdev-form',
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, FormField, MatDialogModule, MatToolbarModule, MatIconModule],
+  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, FormField, MatDialogModule, MatToolbarModule, MatIconModule, MatSelectModule],
   templateUrl: './form.html',
   styleUrl: './form.scss',
   encapsulation: ViewEncapsulation.None,

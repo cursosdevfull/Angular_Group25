@@ -1,26 +1,27 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
-import { Notifications } from 'lib';
+import { catchError, of } from 'rxjs';
+import { Notifications } from 'cursosdev_angular25';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const notifier = inject(Notifications)
-
+  const notifier = inject(Notifications);
 
   return next(req)
     .pipe(
-      catchError(error => {
-        if (error.status >= 400 && error.status < 500) {
-          notifier.error(error.status, "", 60000);
-          //console.error(`Client error: ${error.status} - ${error.statusText}`);
-        } else if (error.status >= 500) {
-          notifier.error(error.status, "", 60000);
-          //console.error(`Server error: ${error.status} - ${error.statusText}`);
+      catchError((error: HttpErrorResponse) => {
+        const backendMessage = error?.error?.message;
+        const message = typeof backendMessage === 'string' && backendMessage.trim().length > 0
+          ? backendMessage
+          : error?.message;
+
+        if (error.status >= 400) {
+          notifier.error(error.status, message, 6000);
         }
 
-        console.log('Error details:', error);
-
-        return throwError(() => new Error('An error occurred while processing the request. Please try again later.'));
+        return of(new HttpResponse({
+          status: error.status || 500,
+          body: { message: message || 'An error occurred while processing the request.' },
+        }));
       })
-    )
+    );
 };

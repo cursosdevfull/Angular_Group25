@@ -1,0 +1,50 @@
+<mat-dialog-content>
+    <mat-toolbar>
+        <h2>{{ scheduleForm.id ? 'Edit' : 'Create' }}</h2>
+        <button matIconButton mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+    <form>
+        <div class="fields">
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input matInput type="text" id="title" [formField]="scheduleForm.title" />
+            </mat-form-field>
+        </div>
+        <div class="fields">
+            <cdev-lib-date-time-picker [formField]="scheduleForm.dateStart"
+                [label]="'Date'"></cdev-lib-date-time-picker>
+        </div>
+
+        <div class="fields">
+            <mat-form-field>
+                <mat-label>Duration (hours)</mat-label>
+                <input matInput type="number" id="duration" [formField]="scheduleForm.duration" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Price</mat-label>
+                <input matInput type="number" id="price" [formField]="scheduleForm.price" />
+            </mat-form-field>
+        </div>
+
+        <div class="fields">
+            <mat-form-field>
+                <mat-label>Course</mat-label>
+                <mat-select [formField]="scheduleForm.courseId">
+                    @for(course of courses(); track course.id){
+                    <mat-option [value]="course.id">
+                        {{ course.name }}
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="actions">
+            <button matButton="filled" type="button" (click)="save()">{{ scheduleForm.id ? 'Update' : 'Create'
+                }}</button>
+            <button matButton type="button" mat-dialog-close>Cancel</button>
+        </div>
+    </form>
+</mat-dialog-content>

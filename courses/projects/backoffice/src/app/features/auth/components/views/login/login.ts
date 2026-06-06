@@ -1,7 +1,7 @@
 import { Component, effect, inject, Inject, signal } from '@angular/core';
 import { form, FormField, pattern, required } from '@angular/forms/signals';
 import { Auth, TAuth, TAuthUseCasesPort } from '../../../domain';
-import { ErrorValidations } from 'lib';
+import { ErrorValidations } from 'cursosdev_angular25';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
